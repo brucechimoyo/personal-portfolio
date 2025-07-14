@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+:host {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  padding: 2rem 0;
+}
+.reports-page {
+  width: 100%;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
+}
+.reports-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  padding: 0;
+}
+.reports-title {
+  font-size: 1.25rem;
+  color: #7c3aed;
+  font-weight: 700;
+  margin-bottom: 0.1rem;
+  margin-top: 0.2rem;
+  letter-spacing: 0.1px;
+}
+.reports-subtitle {
+  font-size: 0.98rem;
+  color: #6b7280;
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+}
+.fab-add-btn {
+  background: linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.13);
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+  outline: none;
+  margin-left: 1rem;
+}
+.fab-add-btn:hover {
+  background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%);
+  box-shadow: 0 4px 24px rgba(124,58,237,0.18);
+  transform: scale(1.07);
+}
+.reports-table-scroll {
+  max-height: 68vh;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+.reports-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.7rem;
+  background: none;
+}
+.reports-table th, .reports-table td {
+  padding: 1rem 1.1rem;
+  text-align: left;
+  font-size: 1.01rem;
+}
+.reports-table th {
+  background: #ede9fe;
+  color: #7c3aed;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px 10px 0 0;
+  letter-spacing: 0.1px;
+}
+.reports-table tr {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.06);
+  transition: box-shadow 0.18s;
+}
+.reports-table tr:hover {
+  box-shadow: 0 4px 24px rgba(124,58,237,0.10);
+}
+.reports-table td {
+  color: #444;
+  border: none;
+  vertical-align: middle;
+  background: none;
+}
+.reports-table .draft {
+  background: #fef9c3;
+  color: #eab308;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.22em 0.9em;
+  font-size: 0.93rem;
+}
+.reports-table .finalized {
+  background: #d1fae5;
+  color: #059669;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.22em 0.9em;
+  font-size: 0.93rem;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0.3rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.18s;
+  outline: none;
+}
+.icon-btn:hover {
+  background: #ede9fe;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(60,0,120,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(124,58,237,0.12);
+  padding: 2rem 2.2rem 1.5rem 2.2rem;
+  min-width: 320px;
+  max-width: 95vw;
+}
+.modal h3 {
+  color: #7c3aed;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+}
+.modal label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: #444;
+  font-size: 1rem;
+}
+.modal input, .modal select {
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ede9fe;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
+  outline: none;
+  transition: border 0.2s;
+}
+.modal input:focus, .modal select:focus {
+  border-color: #7c3aed;
+}
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.2rem;
+}
+.save-btn {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.save-btn:hover {
+  background: #5b21b6;
+}
+.cancel-btn {
+  background: #ede9fe;
+  color: #7c3aed;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cancel-btn:hover {
+  background: #e0e7ff;
+}
+@media (max-width: 900px) {
+  .reports-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0;
+  }
+  .reports-table-scroll {
+    max-height: 60vh;
+  }
+  .reports-table th, .reports-table td {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.98rem;
+  }
+}
