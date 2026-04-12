@@ -1,7 +1,0 @@
-/* Minimal custom styles for main layout after Bootstrap refactor */
-.main-content {
-  background: #fff;
-  border-radius: 0.5rem;
-  min-height: 80vh;
-  box-shadow: 0 2px 8px rgba(124,58,237,0.04);
-} 
