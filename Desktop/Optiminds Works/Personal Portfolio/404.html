@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <script>
+    // GitHub Pages SPA redirect
+    // This file handles 404 errors and redirects to index.html
+    // The router will then handle the correct page display
+    
+    const path = window.location.pathname;
+    const segments = path.split('/').filter(Boolean);
+    
+    // Store the intended path
+    sessionStorage.setItem('redirectPath', '/' + segments.join('/'));
+    
+    // Redirect to index.html
+    window.location.replace('/index.html');
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>

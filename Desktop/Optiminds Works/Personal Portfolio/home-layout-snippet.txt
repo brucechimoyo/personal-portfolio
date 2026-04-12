@@ -1,0 +1,70 @@
+  const aboutHTML = `
+    <div style="width: 100%; max-width: 100%; padding: 0; overflow-x: hidden;">
+      <section style="padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl)) clamp(var(--spacing-md), 3vw, var(--spacing-lg)); width: 100%; box-sizing: border-box;">
+        <h2 style="margin-bottom: var(--spacing-lg); font-size: clamp(var(--font-size-lg), 5vw, var(--font-size-2xl)); word-wrap: break-word;">About Me</h2>
+        <p style="margin-bottom: var(--spacing-lg); line-height: var(--line-height-relaxed); word-wrap: break-word;">
+          ${profile.bio}
+        </p>
+        <p style="margin-bottom: var(--spacing-md); line-height: var(--line-height-relaxed); color: var(--color-text-secondary); font-weight: 500; word-wrap: break-word;">
+          ${headline}
+        </p>
+        <p style="margin-bottom: var(--spacing-xl); line-height: var(--line-height-relaxed); color: var(--color-text-secondary); word-wrap: break-word;">
+          ${description}
+        </p>
+
+        <!-- Skills Grid -->
+        <h3 style="margin-bottom: var(--spacing-lg); font-size: clamp(var(--font-size-base), 4vw, var(--font-size-xl)); word-wrap: break-word;">Skills & Expertise</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 40vw, 250px), 1fr)); gap: clamp(var(--spacing-md), 3vw, var(--spacing-lg)); margin-bottom: var(--spacing-xl); width: 100%; box-sizing: border-box;">
+          ${skillsData.map((skillGroup, index) => `
+            <div class="skill-card observe-fade-in" style="animation-delay: ${index * 100}ms; width: 100%; box-sizing: border-box;">
+              <h4 style="margin-bottom: var(--spacing-md); color: var(--color-accent); font-weight: 600; word-wrap: break-word;">${skillGroup.category}</h4>
+              <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm); margin-bottom: var(--spacing-md);">
+                ${skillGroup.skills.map(skill => `
+                  <span class="skill-tag">${skill}</span>
+                `).join('')}
+              </div>
+              <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin: 0; word-wrap: break-word;">
+                <strong>Proficiency:</strong> ${skillGroup.proficiency}
+              </p>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Timeline -->
+        <h3 style="margin-bottom: var(--spacing-md); margin-top: var(--spacing-xl); font-size: clamp(var(--font-size-base), 3vw, var(--font-size-lg)); word-wrap: break-word;">Experience</h3>
+        <div class="timeline" style="margin-bottom: var(--spacing-lg); padding: clamp(var(--spacing-md), 2vw, var(--spacing-lg)) 0; width: 100%; box-sizing: border-box;">
+          ${timeline.map((item, index) => `
+            <a href="#experience/${item.id}" class="timeline-item observe-fade-in" style="animation-delay: ${index * 100}ms; text-decoration: none; color: inherit; display: block; width: 100%; box-sizing: border-box;">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content" style="word-wrap: break-word;">
+                <div class="timeline-date">${item.date}</div>
+                <div class="timeline-title">${item.title}</div>
+                ${item.organization ? `<div class="timeline-organization" style="font-size: var(--font-size-xs); color: var(--color-text-tertiary);">${item.organization}</div>` : ''}
+              </div>
+            </a>
+          `).join('')}
+        </div>
+
+        <!-- Acknowledgements -->
+        <h3 style="margin-bottom: var(--spacing-md); margin-top: var(--spacing-lg); font-size: clamp(var(--font-size-base), 3vw, var(--font-size-lg)); word-wrap: break-word;">Acknowledgements</h3>
+        <div class="carousel-container" data-carousel="acknowledgements" style="position: relative; overflow: hidden; margin-bottom: var(--spacing-lg); min-height: 120px; width: 100%; box-sizing: border-box;">
+          <button class="carousel-btn carousel-prev" data-carousel="acknowledgements" style="position: absolute; left: clamp(8px, 2vw, 12px); top: 50%; transform: translateY(-50%); z-index: 20; background: var(--color-bg); border: 2px solid var(--color-text); border-radius: 50%; width: clamp(36px, 8vw, 44px); height: clamp(36px, 8vw, 44px); cursor: pointer; font-size: clamp(16px, 3vw, 22px); display: flex; align-items: center; justify-content: center; color: var(--color-text);">&#8249;</button>
+          <button class="carousel-btn carousel-next" data-carousel="acknowledgements" style="position: absolute; right: clamp(8px, 2vw, 12px); top: 50%; transform: translateY(-50%); z-index: 20; background: var(--color-bg); border: 2px solid var(--color-text); border-radius: 50%; width: clamp(36px, 8vw, 44px); height: clamp(36px, 8vw, 44px); cursor: pointer; font-size: clamp(16px, 3vw, 22px); display: flex; align-items: center; justify-content: center; color: var(--color-text);">&#8250;</button>
+          <div class="carousel-track" style="display: flex; transition: transform 0.5s ease-in-out; width: 100%; box-sizing: border-box;">
+            ${acknowledgements.map((item, index) => `
+              <div class="carousel-slide" style="min-width: 100%; padding: clamp(var(--spacing-md), 3vw, var(--spacing-lg)); background: var(--color-bg-secondary); border-radius: 12px; border-left: 3px solid var(--color-accent); box-sizing: border-box;">
+                <div style="font-size: clamp(var(--font-size-xs), 2vw, var(--font-size-sm)); color: var(--color-text-secondary); line-height: 1.6; word-wrap: break-word;">
+                  "${item.quote}"
+                </div>
+                <div style="margin-top: var(--spacing-md); font-size: clamp(var(--font-size-xs), 1.8vw, var(--font-size-sm)); font-weight: 600; word-wrap: break-word;">${item.author}</div>
+                <div style="font-size: var(--font-size-xs); color: var(--color-text-tertiary); word-wrap: break-word;">${item.role}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="carousel-dots" style="display: flex; justify-content: center; gap: clamp(6px, 2vw, 10px); margin-top: var(--spacing-md);">
+            ${acknowledgements.map((_, i) => `<span class="carousel-dot" data-index="${i}" style="width: clamp(8px, 2vw, 10px); height: clamp(8px, 2vw, 10px); border-radius: 50%; background: var(--color-text-tertiary); cursor: pointer;"></span>`).join('')}
+          </div>
+        </div>
+      </section>
+    </div>
+  `;
