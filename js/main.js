@@ -576,11 +576,11 @@ function showHomeView() {
           <div class="carousel-track" style="display: flex; transition: transform 0.5s ease-in-out; width: 100%; box-sizing: border-box;">
             ${acknowledgements.map((item, index) => `
               <div class="carousel-slide" style="min-width: 100%; padding: clamp(var(--spacing-md), 3vw, var(--spacing-lg)); background: var(--color-bg-secondary); border-radius: 12px; border-left: 3px solid var(--color-accent); box-sizing: border-box;">
-                <div style="font-size: clamp(var(--font-size-xs), 2vw, var(--font-size-sm)); color: var(--color-text-secondary); line-height: 1.6; word-wrap: break-word;">
+                <div style="font-size: clamp(var(--font-size-sm), 2.5vw, var(--font-size-base)); color: var(--color-text-secondary); line-height: 1.6; word-wrap: break-word;">
                   "${item.quote}"
                 </div>
-                <div style="margin-top: var(--spacing-md); font-size: clamp(var(--font-size-xs), 1.8vw, var(--font-size-sm)); font-weight: 600; word-wrap: break-word;">${item.author}</div>
-                <div style="font-size: var(--font-size-xs); color: var(--color-text-tertiary); word-wrap: break-word;">${item.role}</div>
+                <div style="margin-top: var(--spacing-md); font-size: clamp(var(--font-size-sm), 2vw, var(--font-size-base)); font-weight: 600; word-wrap: break-word;">${item.author}</div>
+                <div style="font-size: clamp(var(--font-size-xs), 1.5vw, var(--font-size-sm)); color: var(--color-text-tertiary); word-wrap: break-word;">${item.role}</div>
               </div>
             `).join('')}
           </div>
