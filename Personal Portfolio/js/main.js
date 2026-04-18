@@ -539,7 +539,7 @@ function showHomeView() {
 
         <!-- Skills Grid -->
         <h3 style="margin-bottom: var(--spacing-lg); font-size: clamp(var(--font-size-base), 4vw, var(--font-size-xl)); word-wrap: break-word;">Skills & Expertise</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 40vw, 250px), 1fr)); gap: clamp(var(--spacing-md), 3vw, var(--spacing-lg)); margin-bottom: var(--spacing-xl); width: 100%; box-sizing: border-box;">
+        <div style="display: grid; grid-template-columns: 1fr; gap: clamp(var(--spacing-md), 3vw, var(--spacing-lg)); margin-bottom: var(--spacing-xl); width: 100%; box-sizing: border-box; @media (min-width: 768px) { grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 40vw, 250px), 1fr)); }">
           ${skillsData.map((skillGroup, index) => `
             <div class="skill-card observe-fade-in" style="animation-delay: ${index * 100}ms; width: 100%; box-sizing: border-box;">
               <h4 style="margin-bottom: var(--spacing-md); color: var(--color-accent); font-weight: 600; word-wrap: break-word;">${skillGroup.category}</h4>
