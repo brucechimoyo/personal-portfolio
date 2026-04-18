@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.env
+Disallow: /.git/
+Disallow: /node_modules/
+
+Sitemap: https://personal-portfolio-gamma-nine-22.vercel.app/sitemap.xml
+
+# Crawl delay to be respectful
+Crawl-delay: 1

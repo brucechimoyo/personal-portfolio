@@ -8,8 +8,6 @@ import { renderFeed, renderFeedSkeleton, renderFilteredFeed } from './components
 import { renderRightbar, renderRightbarSkeleton } from './components/rightbar.js';
 import { renderProfileHeader, createProfileSkeleton } from './components/profile.js';
 import { showErrorState, createExperienceDetailSkeleton, createProjectDetailSkeleton, createArticleDetailSkeleton } from './components/skeleton.js';
-import { optimizeImages } from './utils/image-optimization.js';
-import { deferNonCriticalScripts } from './utils/code-splitting.js';
 import { 
   getPosts, 
   getProjects, 
@@ -183,12 +181,6 @@ let allProjects = [];
 async function initApp() {
   // Initialize theme system
   initTheme();
-
-  // Optimize images early
-  optimizeImages();
-
-  // Defer non-critical scripts
-  deferNonCriticalScripts();
 
   // Initialize color menu toggles
   initColorMenuToggles();
