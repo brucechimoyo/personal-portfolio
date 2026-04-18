@@ -1023,9 +1023,7 @@ function showArticleDetailView(id) {
                 <a href="#tag/${tag}" class="tag" data-tag="${tag}">${tag}</a>
               `).join('')}
             </div>
-            <a href="${article.link || '#'}" target="_blank" rel="noopener noreferrer" class="card-action">
-              Read on Medium 
-            </a>
+            
           </div>
         </article>
       </section>
