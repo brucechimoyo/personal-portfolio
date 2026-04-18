@@ -951,9 +951,7 @@ function showProjectDetailView(id) {
                 <a href="#tag/${tag}" class="tag" data-tag="${tag}">${tag}</a>
               `).join('') : ''}
             </div>
-            <a href="${project.link || '#'}" target="_blank" rel="noopener noreferrer" class="card-action">
-              View Live Project →
-            </a>
+            
           </div>
         </article>
       </section>
