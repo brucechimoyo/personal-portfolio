@@ -961,6 +961,10 @@ function showProjectDetailView(id) {
     `;
 
     feedContainer.innerHTML = projectDetailHTML;
+    // Immediately show detail content (no scroll animation for detail views)
+    feedContainer.querySelectorAll('.observe-fade-in').forEach(el => {
+      el.classList.add('visible');
+    });
     fadeInPageSection(feedContainer);
     setTimeout(() => {
       initScrollAnimations();
@@ -1036,6 +1040,10 @@ function showArticleDetailView(id) {
     `;
 
     feedContainer.innerHTML = articleDetailHTML;
+    // Immediately show detail content (no scroll animation for detail views)
+    feedContainer.querySelectorAll('.observe-fade-in').forEach(el => {
+      el.classList.add('visible');
+    });
     fadeInPageSection(feedContainer);
     setTimeout(() => {
       initScrollAnimations();
@@ -1133,6 +1141,10 @@ function showExperienceDetailView(id) {
     `;
 
     feedContainer.innerHTML = experienceDetailHTML;
+    // Immediately show detail content (no scroll animation for detail views)
+    feedContainer.querySelectorAll('.observe-fade-in').forEach(el => {
+      el.classList.add('visible');
+    });
     fadeInPageSection(feedContainer);
     setTimeout(() => {
       initScrollAnimations();
