@@ -892,6 +892,9 @@ function showProjectDetailView(id) {
 
   // Simulate loading delay for better UX
   setTimeout(() => {
+    // Scroll to top before rendering content
+    window.scrollTo(0, 0);
+
     const projectDetailHTML = `
       <section style="padding: var(--spacing-lg) var(--spacing-md);">
         <div style="margin-bottom: var(--spacing-lg);">
@@ -959,8 +962,6 @@ function showProjectDetailView(id) {
 
     feedContainer.innerHTML = projectDetailHTML;
     fadeInPageSection(feedContainer);
-    // Scroll to top on mobile to ensure content is visible
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       initScrollAnimations();
     }, 100);
@@ -990,6 +991,9 @@ function showArticleDetailView(id) {
 
   // Simulate loading delay for better UX
   setTimeout(() => {
+    // Scroll to top before rendering content
+    window.scrollTo(0, 0);
+
     const articleDetailHTML = `
       <section style="padding: var(--spacing-lg) var(--spacing-md);">
         <div style="margin-bottom: var(--spacing-lg);">
@@ -1033,8 +1037,6 @@ function showArticleDetailView(id) {
 
     feedContainer.innerHTML = articleDetailHTML;
     fadeInPageSection(feedContainer);
-    // Scroll to top on mobile to ensure content is visible
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       initScrollAnimations();
     }, 100);
@@ -1066,6 +1068,9 @@ function showExperienceDetailView(id) {
 
   // Simulate loading delay for better UX
   setTimeout(() => {
+    // Scroll to top before rendering content
+    window.scrollTo(0, 0);
+
     const experienceDetailHTML = `
       <div class="experience-detail-wrapper">
         <div class="experience-detail-hero" style="position: relative; padding: var(--spacing-lg) var(--spacing-md); background: var(--color-bg-secondary); overflow: hidden; border-bottom: 1px solid var(--color-border);">
@@ -1129,8 +1134,6 @@ function showExperienceDetailView(id) {
 
     feedContainer.innerHTML = experienceDetailHTML;
     fadeInPageSection(feedContainer);
-    // Scroll to top on mobile to ensure content is visible
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       initScrollAnimations();
     }, 100);
