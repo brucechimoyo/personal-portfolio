@@ -56,32 +56,7 @@ import {
   addCardHoverAnimations 
 } from './utils/animations.js';
 import { parseMarkdown, parseRichText } from './utils/markdown.js';
-// Initialize color menu toggle handlers
-function initColorMenuToggles() {
-  const colorToggleMobile = query('#color-toggle-mobile');
-  const colorMenuMobile = query('#color-menu-mobile');
-  const colorToggleDesktop = query('#color-toggle');
-  const colorMenuDesktop = query('#color-menu');
 
-  const toggleMenu = (toggle, menu) => {
-    if (!toggle || !menu) return;
-    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', !isExpanded);
-    if (isExpanded) {
-      menu.setAttribute('hidden', '');
-    } else {
-      menu.removeAttribute('hidden');
-    }
-  };
-
-  if (colorToggleMobile && colorMenuMobile) {
-    on(colorToggleMobile, 'click', () => toggleMenu(colorToggleMobile, colorMenuMobile));
-  }
-
-  if (colorToggleDesktop && colorMenuDesktop) {
-    on(colorToggleDesktop, 'click', () => toggleMenu(colorToggleDesktop, colorMenuDesktop));
-  }
-}
 
 // Typing effect for hero text
 function initTypingEffect(element, text) {
@@ -190,8 +165,7 @@ async function initApp() {
   // Defer non-critical scripts
   deferNonCriticalScripts();
 
-  // Initialize color menu toggles
-  initColorMenuToggles();
+
 
   // Initialize navigation
   initSidebar();
@@ -527,9 +501,7 @@ function showHomeView() {
     <div style="width: 100%; max-width: 100%; padding: 0; overflow-x: hidden;">
       <section style="padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl)) clamp(var(--spacing-md), 3vw, var(--spacing-lg)); width: 100%; box-sizing: border-box;">
         <h2 style="margin-bottom: var(--spacing-lg); font-size: clamp(var(--font-size-lg), 5vw, var(--font-size-2xl)); word-wrap: break-word;">About Me</h2>
-        <p style="margin-bottom: var(--spacing-lg); line-height: var(--line-height-relaxed); word-wrap: break-word;">
-          ${profile.bio}
-        </p>
+        
         <p style="margin-bottom: var(--spacing-md); line-height: var(--line-height-relaxed); color: var(--color-text-secondary); font-weight: 500; word-wrap: break-word;">
           ${headline}
         </p>
