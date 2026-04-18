@@ -671,7 +671,7 @@ function showArticlesView() {
   if (allPosts.length === 0 || isLoading) {
     feedContainer.innerHTML = `
       <section style="padding: var(--spacing-xl) var(--spacing-lg);">
-        <h2 style="margin-bottom: var(--spacing-lg); font-size: var(--font-size-2xl);">Articles & Blog Posts</h2>
+        <h2 style="margin-bottom: var(--spacing-lg); font-size: var(--font-size-2xl);">Stories and Articles</h2>
         <div style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
           ${Array(3).fill(0).map(() => `
             <div class="skeleton-card">
@@ -695,7 +695,7 @@ function showArticlesView() {
 
   const articlesHTML = `
     <section style="padding: var(--spacing-xl) var(--spacing-lg);">
-      <h2 style="margin-bottom: var(--spacing-lg); font-size: var(--font-size-2xl);">Articles & Blog Posts</h2>
+      <h2 style="margin-bottom: var(--spacing-lg); font-size: var(--font-size-2xl);">Stories and Articles</h2>
       <div style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
         ${allPosts.map((post, index) => `
           <a href="#article/${post.id}" style="text-decoration: none; color: inherit;">
@@ -991,7 +991,7 @@ function showArticleDetailView(id) {
     const articleDetailHTML = `
       <section style="padding: var(--spacing-lg) var(--spacing-md);">
         <div style="margin-bottom: var(--spacing-lg);">
-          <button onclick="history.back()" style="background: none; border: none; color: var(--color-accent); cursor: pointer; font-size: var(--font-size-sm); margin-bottom: var(--spacing-lg);">← Back to Articles</button>
+          <button onclick="history.back()" style="background: none; border: none; color: var(--color-accent); cursor: pointer; font-size: var(--font-size-sm); margin-bottom: var(--spacing-lg);">← Back to list</button>
         </div>
 
         <article class="card observe-fade-in">
