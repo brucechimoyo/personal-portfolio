@@ -297,6 +297,9 @@
     }
   </style>
 
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style">
+  
   <!-- Non-critical CSS will be loaded separately -->
   <link rel="stylesheet" href="css/global.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="css/components.css" media="print" onload="this.media='all'">
@@ -320,6 +323,11 @@
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
+
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://i.pravatar.cc">
 
 
 </head>
@@ -424,7 +432,12 @@
     </div>
   </div>
 
-   <!-- Defer non-critical JS -->
+   <!-- Defer non-critical JS with async for better performance -->
    <script type="module" src="js/main.js" defer></script>
+   
+   <!-- Preload critical JS modules -->
+   <link rel="modulepreload" href="js/main.js">
+   <link rel="modulepreload" href="js/theme.js">
+   <link rel="modulepreload" href="js/router.js">
 </body>
 </html>
