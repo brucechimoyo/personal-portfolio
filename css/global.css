@@ -178,7 +178,7 @@ li {
 
 /* Code blocks */
 code {
-  font-family: var(--font-family-mono);
+  font-family: "IBM Plex Mono", "Menlo", "Monaco", "Courier New", monospace;
   font-size: 0.9em;
   background-color: var(--color-bg-secondary);
   padding: 0.2em 0.4em;
