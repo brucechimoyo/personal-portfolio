@@ -620,7 +620,7 @@ function showProjectsView() {
             <article class="card observe-fade-in" style="animation-delay: ${index * 100}ms; cursor: pointer;">
               <div class="card-header">
                 <img 
-                  src="${project.avatar || 'https://i.pravatar.cc/48?u=' + project.author}" 
+                  src="../img/hero.jpeg" 
                   alt="${project.author} avatar" 
                   class="card-avatar"
                   loading="lazy"
@@ -702,7 +702,7 @@ function showArticlesView() {
             <article class="card observe-fade-in" style="animation-delay: ${index * 100}ms; cursor: pointer;">
               <div class="card-header">
                 <img 
-                  src="${post.avatar || 'https://i.pravatar.cc/48?u=' + post.author}" 
+                  src="../img/hero.jpeg" 
                   alt="${post.author} avatar" 
                   class="card-avatar"
                   loading="lazy"
@@ -713,7 +713,7 @@ function showArticlesView() {
                 </div>
               </div>
               <h3 class="card-title">${post.title}</h3>
-              ${post.image ? `<img src="${post.image}" alt="${post.title}" class="card-image" loading="lazy"/>` : ''}
+              ${post.image ? `<img src="../img/hero.jpeg" class="card-image" loading="lazy"/>` : ''}
               <p class="card-description">${post.description}</p>
               <div class="card-footer">
                 <div class="card-tags">
@@ -901,7 +901,7 @@ function showProjectDetailView(id) {
         <article class="card observe-fade-in">
           <div class="card-header">
             <img
-              src="${project.avatar || 'https://i.pravatar.cc/48?u=' + project.author}"
+              src="../img/hero.jpeg"
               alt="${project.author} avatar"
               class="card-avatar"
               loading="lazy"
@@ -997,7 +997,7 @@ function showArticleDetailView(id) {
         <article class="card observe-fade-in">
           <div class="card-header">
             <img
-              src="${article.avatar || 'https://i.pravatar.cc/48?u=' + article.author}"
+              src="../img/hero.jpeg"
               alt="${article.author} avatar"
               class="card-avatar"
               loading="lazy"
