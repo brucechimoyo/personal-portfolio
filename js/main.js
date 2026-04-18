@@ -324,20 +324,21 @@ async function loadContent() {
     }
   }
 
-  // Wait for environment variables to be loaded
-  await new Promise(resolve => {
-    const checkEnv = () => {
-      if (window.__ENV && Object.keys(window.__ENV).length > 0) {
-        resolve();
-      } else {
-        setTimeout(checkEnv, 50);
-      }
-    };
-    checkEnv();
-  });
+  // Initialize environment variables if not already set
+  if (!window.__ENV) {
+    window.__ENV = {};
+  }
 
   try {
-    const isConnected = await testConnection();
+    let isConnected = false;
+    try {
+      const connectionPromise = testConnection();
+      const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(false), 3000));
+      isConnected = await Promise.race([connectionPromise, timeoutPromise]);
+    } catch (e) {
+      console.warn('Connection test failed, using mock data:', e.message);
+      isConnected = false;
+    }
     
     let profile = getMockProfile();
     let posts = getMockPosts();
@@ -353,17 +354,17 @@ async function loadContent() {
     let skillTags = [];
 
     if (isConnected) {
-      try { const d = await fetchPosts(); if (d?.length) posts = d; } catch (e) {}
-      try { const d = await fetchProjects(); if (d?.length) projects = d; } catch (e) {}
-      try { const d = await fetchExperience(); if (d?.length) experience = d; } catch (e) {}
-      try { const d = await fetchHeroText(); if (d?.content) heroText = d.content; } catch (e) {}
-      try { const d = await fetchAboutMeStats(); if (d?.length) aboutMeStats = d; } catch (e) {}
-      try { const d = await fetchAboutMeContent(); if (d) aboutMeContent = d; } catch (e) {}
-      try { const d = await fetchSocials(); if (d) socials = d; } catch (e) {}
-      try { const d = await fetchExpertise(); if (d?.length) expertise = d; } catch (e) {}
-      try { const d = await fetchAcknowledgements(); if (d?.length) acknowledgements = d; } catch (e) {}
-      try { const d = await fetchPopularTags(); if (d?.length) popularTags = d; } catch (e) {}
-      try { const d = await fetchSkillTags(); if (d?.length) skillTags = d; } catch (e) {}
+      try { const d = await Promise.race([fetchPosts(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d?.length) posts = d; } catch (e) {}
+      try { const d = await Promise.race([fetchProjects(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d?.length) projects = d; } catch (e) {}
+      try { const d = await Promise.race([fetchExperience(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d?.length) experience = d; } catch (e) {}
+      try { const d = await Promise.race([fetchHeroText(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d?.content) heroText = d.content; } catch (e) {}
+      try { const d = await Promise.race([fetchAboutMeStats(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d?.length) aboutMeStats = d; } catch (e) {}
+      try { const d = await Promise.race([fetchAboutMeContent(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d) aboutMeContent = d; } catch (e) {}
+      try { const d = await Promise.race([fetchSocials(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d) socials = d; } catch (e) {}
+      try { const d = await Promise.race([fetchExpertise(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d?.length) expertise = d; } catch (e) {}
+      try { const d = await Promise.race([fetchAcknowledgements(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d?.length) acknowledgements = d; } catch (e) {}
+      try { const d = await Promise.race([fetchPopularTags(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d?.length) popularTags = d; } catch (e) {}
+      try { const d = await Promise.race([fetchSkillTags(), new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 3000))]); if (d?.length) skillTags = d; } catch (e) {}
     }
 
     if (heroText) {

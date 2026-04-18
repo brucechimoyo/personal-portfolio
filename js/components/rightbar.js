@@ -6,9 +6,13 @@ import { getAllTags, getFeaturedItems } from './feed.js';
 export function renderRightbar(projects = [], popularTags = [], skillTags = [], socials = []) {
   console.log('Rendering rightbar - projects:', projects.length, 'popularTags:', popularTags, 'skillTags:', skillTags, 'socials:', socials);
   const rightbarContent = query('#rightbar-content');
-  if (!rightbarContent) return;
+  if (!rightbarContent) {
+    console.warn('Rightbar content element not found');
+    return;
+  }
 
-  clear(rightbarContent);
+  try {
+    clear(rightbarContent);
 
   // Latest Projects Widget - Top 3 latest
   const latestProjects = projects
@@ -89,7 +93,10 @@ export function renderRightbar(projects = [], popularTags = [], skillTags = [], 
       </ul>
     </div>
   `);
-  append(rightbarContent, linksWidget);
+    append(rightbarContent, linksWidget);
+  } catch (error) {
+    console.error('Error rendering rightbar:', error);
+  }
 }
 
 export function updateRightbar(projects, popularTags = [], skillTags = [], socials = []) {
@@ -102,6 +109,8 @@ export function renderRightbarSkeleton() {
     console.warn('Rightbar content element not found');
     return;
   }
+
+  try {
 
   clear(rightbarContent);
 
@@ -145,6 +154,9 @@ export function renderRightbarSkeleton() {
       </ul>
     </div>
   `);
-  append(rightbarContent, skeleton);
-  console.log('Rightbar skeleton rendered successfully');
+    append(rightbarContent, skeleton);
+    console.log('Rightbar skeleton rendered successfully');
+  } catch (error) {
+    console.error('Error rendering rightbar skeleton:', error);
+  }
 }
