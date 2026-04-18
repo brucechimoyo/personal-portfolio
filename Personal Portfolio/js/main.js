@@ -959,6 +959,8 @@ function showProjectDetailView(id) {
 
     feedContainer.innerHTML = projectDetailHTML;
     fadeInPageSection(feedContainer);
+    // Scroll to top on mobile to ensure content is visible
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       initScrollAnimations();
     }, 100);
@@ -1031,6 +1033,8 @@ function showArticleDetailView(id) {
 
     feedContainer.innerHTML = articleDetailHTML;
     fadeInPageSection(feedContainer);
+    // Scroll to top on mobile to ensure content is visible
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       initScrollAnimations();
     }, 100);
@@ -1124,8 +1128,9 @@ function showExperienceDetailView(id) {
     `;
 
     feedContainer.innerHTML = experienceDetailHTML;
-    window.scrollTo(0, 0);
     fadeInPageSection(feedContainer);
+    // Scroll to top on mobile to ensure content is visible
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       initScrollAnimations();
     }, 100);
