@@ -42,7 +42,12 @@ export function initTheme() {
     if (toggle && menu) {
       on(toggle, 'click', (e) => {
         e.stopPropagation();
-        menu.toggleAttribute('hidden');
+        const isHidden = menu.hasAttribute('hidden');
+        if (isHidden) {
+          menu.removeAttribute('hidden');
+        } else {
+          menu.setAttribute('hidden', '');
+        }
       });
 
       menu.querySelectorAll('.color-option').forEach(option => {
@@ -55,14 +60,17 @@ export function initTheme() {
         });
       });
 
-      on(document, 'click', () => {
-        menu.setAttribute('hidden', '');
+      on(document, 'click', (e) => {
+        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+          menu.setAttribute('hidden', '');
+        }
       });
     }
   };
   
   setupColorToggle(colorToggle, colorMenu);
   setupColorToggle(colorToggleMobile, colorMenuMobile);
+
 
   // Listen for system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {

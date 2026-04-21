@@ -56,32 +56,7 @@ import {
   addCardHoverAnimations 
 } from './utils/animations.js';
 import { parseMarkdown, parseRichText } from './utils/markdown.js';
-// Initialize color menu toggle handlers
-function initColorMenuToggles() {
-  const colorToggleMobile = query('#color-toggle-mobile');
-  const colorMenuMobile = query('#color-menu-mobile');
-  const colorToggleDesktop = query('#color-toggle');
-  const colorMenuDesktop = query('#color-menu');
 
-  const toggleMenu = (toggle, menu) => {
-    if (!toggle || !menu) return;
-    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', !isExpanded);
-    if (isExpanded) {
-      menu.setAttribute('hidden', '');
-    } else {
-      menu.removeAttribute('hidden');
-    }
-  };
-
-  if (colorToggleMobile && colorMenuMobile) {
-    on(colorToggleMobile, 'click', () => toggleMenu(colorToggleMobile, colorMenuMobile));
-  }
-
-  if (colorToggleDesktop && colorMenuDesktop) {
-    on(colorToggleDesktop, 'click', () => toggleMenu(colorToggleDesktop, colorMenuDesktop));
-  }
-}
 
 // Typing effect for hero text
 function initTypingEffect(element, text) {
@@ -190,8 +165,7 @@ async function initApp() {
   // Defer non-critical scripts
   deferNonCriticalScripts();
 
-  // Initialize color menu toggles
-  initColorMenuToggles();
+
 
   // Initialize navigation
   initSidebar();
@@ -527,9 +501,7 @@ function showHomeView() {
     <div style="width: 100%; max-width: 100%; padding: 0; overflow-x: hidden;">
       <section style="padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl)) clamp(var(--spacing-md), 3vw, var(--spacing-lg)); width: 100%; box-sizing: border-box;">
         <h2 style="margin-bottom: var(--spacing-lg); font-size: clamp(var(--font-size-lg), 5vw, var(--font-size-2xl)); word-wrap: break-word;">About Me</h2>
-        <p style="margin-bottom: var(--spacing-lg); line-height: var(--line-height-relaxed); word-wrap: break-word;">
-          ${profile.bio}
-        </p>
+        
         <p style="margin-bottom: var(--spacing-md); line-height: var(--line-height-relaxed); color: var(--color-text-secondary); font-weight: 500; word-wrap: break-word;">
           ${headline}
         </p>
@@ -539,7 +511,7 @@ function showHomeView() {
 
         <!-- Skills Grid -->
         <h3 style="margin-bottom: var(--spacing-lg); font-size: clamp(var(--font-size-base), 4vw, var(--font-size-xl)); word-wrap: break-word;">Skills & Expertise</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 40vw, 250px), 1fr)); gap: clamp(var(--spacing-md), 3vw, var(--spacing-lg)); margin-bottom: var(--spacing-xl); width: 100%; box-sizing: border-box;">
+        <div style="display: grid; grid-template-columns: 1fr; gap: clamp(var(--spacing-md), 3vw, var(--spacing-lg)); margin-bottom: var(--spacing-xl); width: 100%; box-sizing: border-box; @media (min-width: 768px) { grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 40vw, 250px), 1fr)); }">
           ${skillsData.map((skillGroup, index) => `
             <div class="skill-card observe-fade-in" style="animation-delay: ${index * 100}ms; width: 100%; box-sizing: border-box;">
               <h4 style="margin-bottom: var(--spacing-md); color: var(--color-accent); font-weight: 600; word-wrap: break-word;">${skillGroup.category}</h4>
@@ -648,7 +620,7 @@ function showProjectsView() {
             <article class="card observe-fade-in" style="animation-delay: ${index * 100}ms; cursor: pointer;">
               <div class="card-header">
                 <img 
-                  src="${project.avatar || 'https://i.pravatar.cc/48?u=' + project.author}" 
+                  src="../img/hero.jpeg" 
                   alt="${project.author} avatar" 
                   class="card-avatar"
                   loading="lazy"
@@ -699,7 +671,7 @@ function showArticlesView() {
   if (allPosts.length === 0 || isLoading) {
     feedContainer.innerHTML = `
       <section style="padding: var(--spacing-xl) var(--spacing-lg);">
-        <h2 style="margin-bottom: var(--spacing-lg); font-size: var(--font-size-2xl);">Articles & Blog Posts</h2>
+        <h2 style="margin-bottom: var(--spacing-lg); font-size: var(--font-size-2xl);">Stories and Articles</h2>
         <div style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
           ${Array(3).fill(0).map(() => `
             <div class="skeleton-card">
@@ -723,14 +695,14 @@ function showArticlesView() {
 
   const articlesHTML = `
     <section style="padding: var(--spacing-xl) var(--spacing-lg);">
-      <h2 style="margin-bottom: var(--spacing-lg); font-size: var(--font-size-2xl);">Articles & Blog Posts</h2>
+      <h2 style="margin-bottom: var(--spacing-lg); font-size: var(--font-size-2xl);">Stories and Articles</h2>
       <div style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
         ${allPosts.map((post, index) => `
           <a href="#article/${post.id}" style="text-decoration: none; color: inherit;">
             <article class="card observe-fade-in" style="animation-delay: ${index * 100}ms; cursor: pointer;">
               <div class="card-header">
                 <img 
-                  src="${post.avatar || 'https://i.pravatar.cc/48?u=' + post.author}" 
+                  src="../img/hero.jpeg" 
                   alt="${post.author} avatar" 
                   class="card-avatar"
                   loading="lazy"
@@ -741,7 +713,7 @@ function showArticlesView() {
                 </div>
               </div>
               <h3 class="card-title">${post.title}</h3>
-              ${post.image ? `<img src="${post.image}" alt="${post.title}" class="card-image" loading="lazy"/>` : ''}
+              ${post.image ? `<img src="../img/hero.jpeg" class="card-image" loading="lazy"/>` : ''}
               <p class="card-description">${post.description}</p>
               <div class="card-footer">
                 <div class="card-tags">
@@ -915,21 +887,19 @@ function showProjectDetailView(id) {
   const feedContainer = query('#feed-container');
   if (!feedContainer) return;
 
-  // Show skeleton while loading
-  feedContainer.innerHTML = createProjectDetailSkeleton().innerHTML;
+  // Scroll to top before rendering content
+  window.scrollTo(0, 0);
 
-  // Simulate loading delay for better UX
-  setTimeout(() => {
-    const projectDetailHTML = `
+  const projectDetailHTML = `
       <section style="padding: var(--spacing-lg) var(--spacing-md);">
         <div style="margin-bottom: var(--spacing-lg);">
           <button onclick="history.back()" style="background: none; border: none; color: var(--color-accent); cursor: pointer; font-size: var(--font-size-sm); margin-bottom: var(--spacing-lg);">← Back to Projects</button>
         </div>
 
-        <article class="card observe-fade-in">
+        <article class="card">
           <div class="card-header">
             <img
-              src="${project.avatar || 'https://i.pravatar.cc/48?u=' + project.author}"
+              src="../img/hero.jpeg"
               alt="${project.author} avatar"
               class="card-avatar"
               loading="lazy"
@@ -979,20 +949,13 @@ function showProjectDetailView(id) {
                 <a href="#tag/${tag}" class="tag" data-tag="${tag}">${tag}</a>
               `).join('') : ''}
             </div>
-            <a href="${project.link || '#'}" target="_blank" rel="noopener noreferrer" class="card-action">
-              View Live Project →
-            </a>
+            
           </div>
         </article>
       </section>
     `;
 
-    feedContainer.innerHTML = projectDetailHTML;
-    fadeInPageSection(feedContainer);
-    setTimeout(() => {
-      initScrollAnimations();
-    }, 100);
-  }, 800);
+  feedContainer.innerHTML = projectDetailHTML;
 }
 
 function showArticleDetailView(id) {
@@ -1018,16 +981,19 @@ function showArticleDetailView(id) {
 
   // Simulate loading delay for better UX
   setTimeout(() => {
+    // Scroll to top before rendering content
+    window.scrollTo(0, 0);
+
     const articleDetailHTML = `
       <section style="padding: var(--spacing-lg) var(--spacing-md);">
         <div style="margin-bottom: var(--spacing-lg);">
-          <button onclick="history.back()" style="background: none; border: none; color: var(--color-accent); cursor: pointer; font-size: var(--font-size-sm); margin-bottom: var(--spacing-lg);">← Back to Articles</button>
+          <button onclick="history.back()" style="background: none; border: none; color: var(--color-accent); cursor: pointer; font-size: var(--font-size-sm); margin-bottom: var(--spacing-lg);">← Back to list</button>
         </div>
 
         <article class="card observe-fade-in">
           <div class="card-header">
             <img
-              src="${article.avatar || 'https://i.pravatar.cc/48?u=' + article.author}"
+              src="../img/hero.jpeg"
               alt="${article.author} avatar"
               class="card-avatar"
               loading="lazy"
@@ -1053,15 +1019,17 @@ function showArticleDetailView(id) {
                 <a href="#tag/${tag}" class="tag" data-tag="${tag}">${tag}</a>
               `).join('')}
             </div>
-            <a href="${article.link || '#'}" target="_blank" rel="noopener noreferrer" class="card-action">
-              Read on Medium 
-            </a>
+            
           </div>
         </article>
       </section>
     `;
 
     feedContainer.innerHTML = articleDetailHTML;
+    // Immediately show detail content (no scroll animation for detail views)
+    feedContainer.querySelectorAll('.observe-fade-in').forEach(el => {
+      el.classList.add('visible');
+    });
     fadeInPageSection(feedContainer);
     setTimeout(() => {
       initScrollAnimations();
@@ -1094,6 +1062,9 @@ function showExperienceDetailView(id) {
 
   // Simulate loading delay for better UX
   setTimeout(() => {
+    // Scroll to top before rendering content
+    window.scrollTo(0, 0);
+
     const experienceDetailHTML = `
       <div class="experience-detail-wrapper">
         <div class="experience-detail-hero" style="position: relative; padding: var(--spacing-lg) var(--spacing-md); background: var(--color-bg-secondary); overflow: hidden; border-bottom: 1px solid var(--color-border);">
@@ -1156,7 +1127,10 @@ function showExperienceDetailView(id) {
     `;
 
     feedContainer.innerHTML = experienceDetailHTML;
-    window.scrollTo(0, 0);
+    // Immediately show detail content (no scroll animation for detail views)
+    feedContainer.querySelectorAll('.observe-fade-in').forEach(el => {
+      el.classList.add('visible');
+    });
     fadeInPageSection(feedContainer);
     setTimeout(() => {
       initScrollAnimations();
