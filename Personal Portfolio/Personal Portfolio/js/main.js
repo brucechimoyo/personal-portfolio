@@ -887,16 +887,21 @@ function showProjectDetailView(id) {
   const feedContainer = query('#feed-container');
   if (!feedContainer) return;
 
-  // Scroll to top before rendering content
-  window.scrollTo(0, 0);
+  // Show skeleton while loading
+  feedContainer.innerHTML = createProjectDetailSkeleton().innerHTML;
 
-  const projectDetailHTML = `
+  // Simulate loading delay for better UX
+  setTimeout(() => {
+    // Scroll to top before rendering content
+    window.scrollTo(0, 0);
+
+    const projectDetailHTML = `
       <section style="padding: var(--spacing-lg) var(--spacing-md);">
         <div style="margin-bottom: var(--spacing-lg);">
           <button onclick="history.back()" style="background: none; border: none; color: var(--color-accent); cursor: pointer; font-size: var(--font-size-sm); margin-bottom: var(--spacing-lg);">← Back to Projects</button>
         </div>
 
-        <article class="card">
+        <article class="card observe-fade-in">
           <div class="card-header">
             <img
               src="../img/hero.jpeg"
@@ -955,7 +960,16 @@ function showProjectDetailView(id) {
       </section>
     `;
 
-  feedContainer.innerHTML = projectDetailHTML;
+    feedContainer.innerHTML = projectDetailHTML;
+    // Immediately show detail content (no scroll animation for detail views)
+    feedContainer.querySelectorAll('.observe-fade-in').forEach(el => {
+      el.classList.add('visible');
+    });
+    fadeInPageSection(feedContainer);
+    setTimeout(() => {
+      initScrollAnimations();
+    }, 100);
+  }, 800);
 }
 
 function showArticleDetailView(id) {
