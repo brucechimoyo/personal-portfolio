@@ -4,7 +4,7 @@
   "description": "A production-ready, high-performance developer portfolio website inspired by Twitter/X's clean, minimal aesthetic. Built with vanilla HTML, CSS, and JavaScript with Contentful CMS integration.",
   "main": "index.html",
   "scripts": {
-    "start": "python -m http.server 8000",
+    "start": "python3 -m http.server 8000",
     "serve": "npx http-server",
     "build": "echo 'No build step required for vanilla JS'",
     "deploy": "git push origin main"
