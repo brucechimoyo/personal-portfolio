@@ -2088,22 +2088,34 @@ html[data-theme="cli"] .theme-toggle-desktop .icon-cli {
 
 /* Mobile Responsive */
 @media (max-width: 767px) {
+  .timeline-marker {
+    display: none;
+  }
+
+  .timeline::before {
+    display: none;
+  }
+
+  .timeline-item {
+    margin-left: 0;
+  }
+
   .experience-detail-wrapper {
     grid-column: 1 / -1;
   }
-  
+
   .experience-detail-hero {
     padding: var(--spacing-xl) var(--spacing-lg);
   }
-  
+
   .experience-detail-body {
     padding: var(--spacing-lg);
   }
-  
+
   .experience-detail-title {
     font-size: var(--font-size-2xl);
   }
-  
+
   .experience-detail-sidebar {
     width: 100%;
   }
@@ -2231,6 +2243,7 @@ html[data-theme="cli"] .theme-toggle-desktop .icon-cli {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   flex-direction: column;
   overflow: hidden;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   z-index: 1000;
 }
@@ -2291,6 +2304,7 @@ html[data-theme="cli"] .theme-toggle-desktop .icon-cli {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   flex-direction: column;
   overflow: hidden;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -2447,6 +2461,12 @@ html[data-theme="cli"] .theme-toggle-desktop .icon-cli {
   /* Homepage text alignment on mobile - only for home view */
   #profile-header.active ~ #feed-container section {
     text-align: center;
+  }
+}
+
+@media (max-width: 767px) {
+  body.page-wide .card {
+    padding: 0;
   }
 }
 

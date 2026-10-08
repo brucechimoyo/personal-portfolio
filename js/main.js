@@ -414,7 +414,12 @@ function handleStateChange(state) {
   // Handle state changes if needed
 }
 
+function setWideLayout(wide) {
+  document.body.classList.toggle('page-wide', wide);
+}
+
 function showHomeView() {
+  setWideLayout(false);
   setActiveNavByView('home');
   setActiveMobileNavByView('home');
   const profileHeader = query('#profile-header');
@@ -548,11 +553,11 @@ function showHomeView() {
           <div class="carousel-track" style="display: flex; transition: transform 0.5s ease-in-out; width: 100%; box-sizing: border-box;">
             ${acknowledgements.map((item, index) => `
               <div class="carousel-slide" style="min-width: 100%; padding: clamp(var(--spacing-md), 3vw, var(--spacing-lg)); background: var(--color-bg-secondary); border-radius: 12px; border-left: 3px solid var(--color-accent); box-sizing: border-box;">
-                <div style="font-size: clamp(var(--font-size-sm), 2.5vw, var(--font-size-base)); color: var(--color-text-secondary); line-height: 1.6; word-wrap: break-word;">
+                <div style="font-size: calc(clamp(var(--font-size-sm), 2.5vw, var(--font-size-base)) * 1.2); color: var(--color-text-secondary); line-height: 1.6; word-wrap: break-word;">
                   "${item.quote}"
                 </div>
-                <div style="margin-top: var(--spacing-md); font-size: clamp(var(--font-size-sm), 2vw, var(--font-size-base)); font-weight: 600; word-wrap: break-word;">${item.author}</div>
-                <div style="font-size: clamp(var(--font-size-xs), 1.5vw, var(--font-size-sm)); color: var(--color-text-tertiary); word-wrap: break-word;">${item.role}</div>
+                <div style="margin-top: var(--spacing-md); font-size: calc(clamp(var(--font-size-sm), 2vw, var(--font-size-base)) * 1.2); font-weight: 600; word-wrap: break-word;">${item.author}</div>
+                <div style="font-size: calc(clamp(var(--font-size-xs), 1.5vw, var(--font-size-sm)) * 1.2); color: var(--color-text-tertiary); word-wrap: break-word;">${item.role}</div>
               </div>
             `).join('')}
           </div>
@@ -574,6 +579,7 @@ function showHomeView() {
 }
 
 function showProjectsView() {
+  setWideLayout(true);
   setActiveNavByView('projects');
   setActiveMobileNavByView('projects');
   const profileHeader = query('#profile-header');
@@ -656,6 +662,7 @@ function showProjectsView() {
 }
 
 function showArticlesView() {
+  setWideLayout(true);
   setActiveNavByView('articles');
   setActiveMobileNavByView('articles');
   const profileHeader = query('#profile-header');
@@ -870,6 +877,7 @@ function showTagView(tag) {
 }
 
 function showProjectDetailView(id) {
+  setWideLayout(true);
   setActiveNavByView('projects');
   setActiveMobileNavByView('projects');
   const profileHeader = query('#profile-header');
@@ -959,6 +967,7 @@ function showProjectDetailView(id) {
 }
 
 function showArticleDetailView(id) {
+  setWideLayout(true);
   setActiveNavByView('articles');
   setActiveMobileNavByView('articles');
   const profileHeader = query('#profile-header');

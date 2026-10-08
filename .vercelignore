@@ -1,0 +1,30 @@
+# Only the static site (index.html, 404.html, css/, js/, img/, manifest, robots, sitemap) is deployed.
+
+# Stale nested copies of the site
+Personal Portfolio/
+
+# Other hosting / server configs
+.github/
+.kilo/
+.sixth/
+Dockerfile
+.dockerignore
+docker-compose.yml
+nginx.conf
+nginx.production.conf
+deploy.sh
+setup-server.sh
+netlify.toml
+web.config
+.htaccess
+
+# Dev scratch files and docs
+*.md
+fix-arrows.js
+fix-arrows2.js
+home-layout-snippet.txt
+BROWSER_COMPATIBILITY_META_TAGS.html
+.hintrc
+.env*
+package.json
+package-lock.json
