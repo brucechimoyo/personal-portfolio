@@ -47,12 +47,6 @@ export function createCard(item, index = 0) {
         <h3 class="card-title"><a href="${href}" class="card-link">${item.title}</a></h3>
         <p class="card-description">${item.description || ''}</p>
 
-        ${item.image ? `
-          <div class="card-media">
-            <img src="${item.image}" alt="" class="card-image" loading="lazy" />
-          </div>
-        ` : ''}
-
         ${(item.tags || []).length ? `
           <div class="card-tags">
             ${item.tags.map(tag => `<a href="#tag/${tag}" class="tag" data-tag="${tag}">${tag}</a>`).join('')}
