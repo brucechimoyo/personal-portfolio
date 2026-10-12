@@ -2,9 +2,10 @@
 
 import { createElement, append, clear, query, html } from '../utils/dom.js';
 import { getAllTags, getFeaturedItems } from './feed.js';
+import { icon, socialIcon } from '../utils/icons.js';
+import { formatDate } from '../utils/format.js';
 
 export function renderRightbar(projects = [], popularTags = [], skillTags = [], socials = []) {
-  console.log('Rendering rightbar - projects:', projects.length, 'popularTags:', popularTags, 'skillTags:', skillTags, 'socials:', socials);
   const rightbarContent = query('#rightbar-content');
   if (!rightbarContent) {
     console.warn('Rightbar content element not found');
@@ -21,14 +22,18 @@ export function renderRightbar(projects = [], popularTags = [], skillTags = [], 
   
   if (latestProjects.length > 0) {
     const latestWidget = html(`
-      <div class="rightbar-widget">
+      <div class="rightbar-widget" data-spotlight>
         <h3 class="widget-title">Latest Projects</h3>
         <div class="featured-projects-list">
           ${latestProjects
-            .map(project => `
+            .map((project, index) => `
               <a href="#project/${project.id}" class="featured-project">
-                <div class="featured-project-title">${project.title}</div>
-                <div class="featured-project-desc">${project.description}</div>
+                <span class="featured-project-index">${String(index + 1).padStart(2, '0')}</span>
+                <span>
+                  <div class="featured-project-kicker">Project${project.date ? ` · ${formatDate(new Date(project.date))}` : ''}</div>
+                  <div class="featured-project-title">${project.title}</div>
+                  <div class="featured-project-desc">${project.description}</div>
+                </span>
               </a>
             `)
             .join('')}
@@ -42,12 +47,12 @@ export function renderRightbar(projects = [], popularTags = [], skillTags = [], 
   const displayTags = popularTags.length > 0 ? popularTags : [];
   if (displayTags.length > 0) {
     const tagsWidget = html(`
-      <div class="rightbar-widget">
+      <div class="rightbar-widget" data-spotlight>
         <h3 class="widget-title">Popular Tags</h3>
-        <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
+        <div class="tag-cloud">
           ${displayTags
             .map(tag => `
-              <a href="#tag/${tag}" class="tag">
+              <a href="#tag/${tag}" class="tag" data-tag="${tag}">
                 ${tag}
               </a>
             `)
@@ -61,7 +66,7 @@ export function renderRightbar(projects = [], popularTags = [], skillTags = [], 
   // Skills Widget - use Contentful skillTags or fallback to hardcoded
   const displaySkills = skillTags.length > 0 ? skillTags : ['JavaScript', 'TypeScript', 'React', 'Vue.js', 'CSS', 'Performance', 'Accessibility', 'Web APIs'];
   const skillsWidget = html(`
-    <div class="rightbar-widget">
+    <div class="rightbar-widget" data-spotlight>
       <h3 class="widget-title">Skills</h3>
       <div class="skill-grid">
         ${displaySkills.slice(0, 8).map(skill => `
@@ -80,13 +85,15 @@ export function renderRightbar(projects = [], popularTags = [], skillTags = [], 
     { name: 'Email', url: 'mailto:hello@example.com' }
   ];
   const linksWidget = html(`
-    <div class="rightbar-widget">
+    <div class="rightbar-widget" data-spotlight>
       <h3 class="widget-title">Links</h3>
       <ul class="widget-list">
         ${displayLinks.map(link => `
           <li class="widget-item">
             <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="widget-item-link">
-              ${link.name} →
+              <span class="widget-item-icon">${socialIcon(link, 16)}</span>
+              ${link.name}
+              <span class="widget-item-arrow">${icon('arrowUpRight', 16)}</span>
             </a>
           </li>
         `).join('')}
@@ -94,6 +101,7 @@ export function renderRightbar(projects = [], popularTags = [], skillTags = [], 
     </div>
   `);
     append(rightbarContent, linksWidget);
+    append(rightbarContent, html(`<p class="rightbar-footer">© ${new Date().getFullYear()} Bruce Takura Chimoyo · Built with vanilla JS</p>`));
   } catch (error) {
     console.error('Error rendering rightbar:', error);
   }
@@ -115,7 +123,7 @@ export function renderRightbarSkeleton() {
   clear(rightbarContent);
 
   const skeleton = html(`
-    <div class="rightbar-widget">
+    <div class="rightbar-widget" data-spotlight>
       <h3 class="widget-title">Latest Projects</h3>
       <div class="featured-projects-list">
         ${Array(3).fill(0).map(() => `
@@ -127,7 +135,7 @@ export function renderRightbarSkeleton() {
         `).join('')}
       </div>
     </div>
-    <div class="rightbar-widget">
+    <div class="rightbar-widget" data-spotlight>
       <h3 class="widget-title">Popular Tags</h3>
       <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
         ${Array(12).fill(0).map(() => `
@@ -135,7 +143,7 @@ export function renderRightbarSkeleton() {
         `).join('')}
       </div>
     </div>
-    <div class="rightbar-widget">
+    <div class="rightbar-widget" data-spotlight>
       <h3 class="widget-title">Skills</h3>
       <div class="skill-grid">
         ${Array(8).fill(0).map(() => `
@@ -143,7 +151,7 @@ export function renderRightbarSkeleton() {
         `).join('')}
       </div>
     </div>
-    <div class="rightbar-widget">
+    <div class="rightbar-widget" data-spotlight>
       <h3 class="widget-title">Links</h3>
       <ul class="widget-list">
         ${Array(4).fill(0).map(() => `
@@ -155,7 +163,6 @@ export function renderRightbarSkeleton() {
     </div>
   `);
     append(rightbarContent, skeleton);
-    console.log('Rightbar skeleton rendered successfully');
   } catch (error) {
     console.error('Error rendering rightbar skeleton:', error);
   }

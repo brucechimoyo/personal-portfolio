@@ -3,8 +3,9 @@
 import { createCard, createCardSkeleton, createEmptyState } from './card.js';
 import { createElement, append, clear, query } from '../utils/dom.js';
 import { getPosts, getProjects, getCurrentFilter } from '../state.js';
+import { initScrollAnimations } from '../utils/animations.js';
 
-export function renderFeed(items = []) {
+export function renderFeed(items = [], intro = '') {
   const feedContainer = query('#feed-container');
   if (!feedContainer) return;
 
@@ -15,10 +16,17 @@ export function renderFeed(items = []) {
     return;
   }
 
-  items.forEach(item => {
-    const card = createCard(item);
-    append(feedContainer, card);
-  });
+  const section = createElement('section', 'feed-list view-enter');
+  if (intro) {
+    const header = createElement('div', 'feed-list-intro');
+    header.innerHTML = intro;
+    append(section, header);
+  }
+  const list = createElement('div', 'feed-cards');
+  items.forEach((item, index) => append(list, createCard(item, index)));
+  append(section, list);
+  append(feedContainer, section);
+  initScrollAnimations();
 }
 
 export function renderFeedSkeleton(count = 3) {
@@ -44,9 +52,9 @@ export function searchFeed(items = [], query) {
   
   const lowerQuery = query.toLowerCase();
   return items.filter(item =>
-    item.title.toLowerCase().includes(lowerQuery) ||
-    item.description.toLowerCase().includes(lowerQuery) ||
-    (item.tags || []).some(tag => tag.toLowerCase().includes(lowerQuery))
+    (item.title || '').toLowerCase().includes(lowerQuery) ||
+    (item.description || '').toLowerCase().includes(lowerQuery) ||
+    (item.tags || []).some(tag => String(tag).toLowerCase().includes(lowerQuery))
   );
 }
 
@@ -65,7 +73,7 @@ export function renderFilteredFeed(allItems, filter) {
       append(feedContainer, createEmptyState('🏷️', `No items with tag "${filter}"`, 'Try a different tag'));
     }
   } else {
-    renderFeed(filtered);
+    renderFeed(filtered, `<span>Tagged <strong>#${filter}</strong></span><span>${filtered.length} ${filtered.length === 1 ? 'result' : 'results'}</span>`);
   }
 }
 

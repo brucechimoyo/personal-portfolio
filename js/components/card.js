@@ -1,77 +1,94 @@
 /* Card Component - Reusable for Posts and Projects */
 
-import { formatDate, getReadingTime } from '../utils/format.js';
+import { formatDate } from '../utils/format.js';
 import { createElement, append, html } from '../utils/dom.js';
+import { icon } from '../utils/icons.js';
 
-export function createCard(item) {
+export function isProjectItem(item) {
+  return item.type === 'project';
+}
+
+export function getItemHref(item) {
+  return `#${isProjectItem(item) ? 'project' : 'article'}/${item.id}`;
+}
+
+function relativeDate(item) {
+  const raw = item.date || item.createdAt;
+  if (!raw) return '';
+  const date = new Date(raw);
+  return Number.isNaN(date.getTime()) ? '' : formatDate(date);
+}
+
+export function createCard(item, index = 0) {
   const card = createElement('article', 'card observe-fade-in');
-  
-  const isProject = item.type === 'project';
-  const dateStr = formatDate(new Date(item.createdAt));
-  const readTime = !isProject ? getReadingTime(item.content) : '';
+  card.setAttribute('data-tilt', '3');
+  card.style.animationDelay = `${Math.min(index, 6) * 80}ms`;
 
-  const cardHTML = html(`
-    <div class="card-header">
-      <img 
-        src="${item.avatar || 'https://i.pravatar.cc/48?u=' + (item.author || 'project')}" 
-        alt="${item.author || item.title} avatar" 
+  const isProject = isProjectItem(item);
+  const href = getItemHref(item);
+  const when = relativeDate(item);
+
+  card.innerHTML = `
+      <img
+        src="img/hero.jpeg"
+        alt=""
         class="card-avatar"
+        width="44"
+        height="44"
         loading="lazy"
       />
-      <div class="card-meta">
-        <div class="card-author">${item.author || 'Project'}</div>
-        <div class="card-date">${dateStr} ${readTime ? '· ' + readTime : ''}</div>
+      <div class="card-body">
+        <div class="card-header">
+          <span class="card-author">${item.author || 'Bruce Takura Chimoyo'}</span>
+          <span class="card-badge">${isProject ? 'Project' : 'Story'}</span>
+          ${when ? `<span class="card-date">· ${when}</span>` : ''}
+        </div>
+
+        <h3 class="card-title"><a href="${href}" class="card-link">${item.title}</a></h3>
+        <p class="card-description">${item.description || ''}</p>
+
+        ${item.image ? `
+          <div class="card-media">
+            <img src="${item.image}" alt="" class="card-image" loading="lazy" />
+          </div>
+        ` : ''}
+
+        ${(item.tags || []).length ? `
+          <div class="card-tags">
+            ${item.tags.map(tag => `<a href="#tag/${tag}" class="tag" data-tag="${tag}">${tag}</a>`).join('')}
+          </div>
+        ` : ''}
+
+        <div class="card-actions">
+          ${!isProject && item.readTime ? `<span class="card-meta-item">${icon('stories', 16)}${item.readTime}</span>` : ''}
+          <button type="button" class="card-action-btn" data-share="${href}" data-share-title="${(item.title || '').replace(/"/g, '&quot;')}" aria-label="Share ${(item.title || '').replace(/"/g, '&quot;')}">
+            ${icon('share', 16)}<span>Share</span>
+          </button>
+          <a href="${href}" class="card-action-btn push" tabindex="-1">
+            <span>${isProject ? 'View project' : 'Read story'}</span>${icon('arrowUpRight', 16)}
+          </a>
+        </div>
       </div>
-    </div>
+  `;
 
-    <h3 class="card-title">${item.title}</h3>
-    
-    ${item.image ? `
-      <img 
-        src="${item.image}" 
-        alt="${item.title}" 
-        class="card-image"
-        loading="lazy"
-      />
-    ` : ''}
-
-    <p class="card-description">${item.description}</p>
-
-    <div class="card-footer">
-      <div class="card-tags">
-        ${(item.tags || [])
-          .map(tag => `
-            <a href="#tag/${tag}" class="tag" data-tag="${tag}">
-              ${tag}
-            </a>
-          `)
-          .join('')}
-      </div>
-      <a href="${item.link || '#'}" class="card-action">
-        ${isProject ? 'View Project →' : 'Read More →'}
-        →
-      </a>
-    </div>
-  `);
-
-  append(card, cardHTML);
   return card;
 }
 
 export function createCardSkeleton() {
   const card = createElement('div', 'skeleton-card');
-  
+
   const skeleton = html(`
-    <div style="display: flex; gap: var(--spacing-md);">
-      <div class="skeleton-avatar skeleton-avatar-circular"></div>
-      <div style="flex: 1;">
-        <div class="skeleton-line" style="width: 60%;"></div>
-        <div class="skeleton-line" style="width: 40%; height: 12px;"></div>
+    <div>
+      <div style="display: flex; gap: var(--spacing-md);">
+        <div class="skeleton-avatar skeleton-avatar-circular" style="width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;"></div>
+        <div style="flex: 1;">
+          <div class="skeleton-line" style="width: 45%; height: 14px; margin-bottom: 10px;"></div>
+          <div class="skeleton-line" style="width: 80%; height: 20px; margin-bottom: 10px;"></div>
+          <div class="skeleton-line" style="width: 100%; height: 14px; margin-bottom: 6px;"></div>
+          <div class="skeleton-line" style="width: 90%; height: 14px;"></div>
+        </div>
       </div>
     </div>
-    <div class="skeleton-line" style="margin-top: var(--spacing-md); height: 20px; width: 80%;"></div>
-    <div class="skeleton-line" style="margin-top: var(--spacing-sm); height: 16px; width: 100%;"></div>
-    <div class="skeleton-line" style="margin-top: var(--spacing-sm); height: 16px; width: 90%;"></div>
   `);
 
   append(card, skeleton);

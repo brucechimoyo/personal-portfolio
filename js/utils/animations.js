@@ -61,44 +61,14 @@ export function smoothScrollTo(element) {
 }
 
 /**
- * Add hover animation to cards
- */
-export function addCardHoverAnimations() {
-  const cards = document.querySelectorAll('.card');
-  cards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.style.transform = 'translateY(-4px)';
-      this.style.boxShadow = 'var(--shadow-lg)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-      this.style.transform = 'translateY(0)';
-      this.style.boxShadow = 'var(--shadow-sm)';
-    });
-  });
-}
-
-/**
  * Fade in page section
  */
 export function fadeInPageSection(container) {
   if (!container) return;
-  
-  container.style.opacity = '0';
-  container.style.transform = 'translateY(10px)';
-  
-  // Trigger reflow to ensure animation starts
+  container.classList.remove('view-enter');
+  // Force reflow so the entry animation restarts on every view change
   void container.offsetWidth;
-  
-  container.style.transition = 'opacity 300ms ease-out, transform 300ms ease-out';
-  container.style.opacity = '1';
-  container.style.transform = 'translateY(0)';
-  
-  // Clean up inline styles after animation
-  setTimeout(() => {
-    container.style.transition = '';
-    container.style.transform = '';
-  }, 300);
+  container.classList.add('view-enter');
 }
 
 /**

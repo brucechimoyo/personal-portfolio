@@ -955,14 +955,6 @@ html[data-theme="cli"] .theme-toggle-desktop .icon-cli {
 }
 
 @media (max-width: 479px) {
-  h2, h3 {
-    text-align: center;
-  }
-
-  section > h2:first-child,
-  section > h3:first-child {
-    text-align: center;
-  }
 
     max-width: 300px;
     right: -1rem;
@@ -2458,10 +2450,6 @@ html[data-theme="cli"] .theme-toggle-desktop .icon-cli {
     right: -1rem;
   }
 
-  /* Homepage text alignment on mobile - only for home view */
-  #profile-header.active ~ #feed-container section {
-    text-align: center;
-  }
 }
 
 @media (max-width: 767px) {
