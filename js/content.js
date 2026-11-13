@@ -113,9 +113,7 @@ function normalise(payload) {
     .filter((s) => s.name && s.url)
     .sort((a, b) => socialRank(a.name) - socialRank(b.name));
 
-  const about = list('aboutMeContent')[0] || null;
-
-  return { projects, articles, experience, skills, socials, about, assets };
+  return { projects, articles, experience, skills, socials, assets };
 }
 
 /* ---------- helpers ---------- */
@@ -139,7 +137,7 @@ function byDateDesc(a, b) {
   return (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0);
 }
 
-export function yearOf(value) {
+function yearOf(value) {
   const match = String(value || '').match(/\b(19|20)\d{2}\b/);
   return match ? Number(match[0]) : null;
 }

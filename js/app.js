@@ -17,11 +17,11 @@ const esc = (value) =>
 
 const slot = (name) => homeView.querySelector(`[data-slot="${name}"]`);
 
-function fill(name, markup) {
+function fill(name, markup, busy = false) {
   const el = slot(name);
   if (!el) return;
   el.innerHTML = markup;
-  el.removeAttribute('aria-busy');
+  el.toggleAttribute('aria-busy', busy);
 }
 
 function formatDate(value, opts = { month: 'short', year: 'numeric' }) {
@@ -60,11 +60,10 @@ const SLOTS = ['projects', 'experience', 'skills', 'articles'];
 
 function renderPlaceholders() {
   const ghosts = (n) => Array.from({ length: n }, () => '<li class="ghost" aria-hidden="true"></li>').join('');
-  fill('projects', ghosts(1));
-  fill('experience', ghosts(3));
-  fill('skills', `<ul>${ghosts(3)}</ul>`);
-  fill('articles', ghosts(1));
-  for (const name of SLOTS) slot(name)?.setAttribute('aria-busy', 'true');
+  fill('projects', ghosts(1), true);
+  fill('experience', ghosts(3), true);
+  fill('skills', `<ul>${ghosts(3)}</ul>`, true);
+  fill('articles', ghosts(1), true);
 }
 
 function renderHome(data) {
@@ -170,14 +169,6 @@ function richText(node, assets) {
       return `<blockquote>${kids()}</blockquote>`;
     case 'hr':
       return '<hr>';
-    case 'table':
-      return `<table>${kids()}</table>`;
-    case 'table-row':
-      return `<tr>${kids()}</tr>`;
-    case 'table-header-cell':
-      return `<th>${kids()}</th>`;
-    case 'table-cell':
-      return `<td>${kids()}</td>`;
     case 'embedded-asset-block': {
       const asset = assets[node.data?.target?.sys?.id];
       if (!asset) return '';
@@ -193,7 +184,7 @@ function richText(node, assets) {
     case 'text': {
       let text = esc(node.value).replace(/\n/g, '<br>');
       for (const mark of node.marks || []) {
-        const tag = { bold: 'strong', italic: 'em', underline: 'u', code: 'code', superscript: 'sup', subscript: 'sub' }[mark.type];
+        const tag = { bold: 'strong', italic: 'em', underline: 'u', code: 'code' }[mark.type];
         if (tag) text = `<${tag}>${text}</${tag}>`;
       }
       return text;
@@ -258,7 +249,7 @@ const BACK = {
 };
 
 const backLink = (type) => {
-  const [hash, label] = BACK[type] ?? ['top', 'Home'];
+  const [hash, label] = BACK[type];
   return `<a class="back" href="#${hash}" data-back>← ${label}</a>`;
 };
 
@@ -389,7 +380,7 @@ async function renderDetail(type, id) {
    ========================================================================== */
 
 const DETAIL_ROUTE = /^(project|article|experience)\/(.+)$/;
-const LEGACY = { '': 'top', home: 'top', projects: 'work', articles: 'writing', about: 'top', tag: 'writing' };
+const LEGACY = { projects: 'work', articles: 'writing' }; // old URLs from the previous site
 
 let currentDetail = null;
 let homeScroll = { hash: '', y: 0 };
@@ -458,6 +449,16 @@ document.addEventListener('click', (event) => {
   if (event.target.closest('[data-retry]')) {
     hydrateHome();
     if (currentDetail) route();
+    return;
+  }
+  // Profile photo viewer: open from the avatar; close on ×, Esc (native) or a click outside the photo.
+  const photo = document.getElementById('photo-dialog');
+  if (event.target.closest('[data-open-photo]')) {
+    photo.showModal();
+    return;
+  }
+  if (photo.open && (event.target === photo || event.target.closest('[data-close-photo]'))) {
+    photo.close();
     return;
   }
   if (event.target.closest('[data-to-top]') && !currentDetail) {
